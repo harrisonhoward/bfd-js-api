@@ -2,7 +2,7 @@
 Javascript Library made for Bots for Discord API
 
 ## How to Install
-`npm install bfdapi`
+`npm install bfd-js-api`
 
 ## Documentation AutoPost
 ```js
