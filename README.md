@@ -9,7 +9,7 @@ Javascript Library made for Bots for Discord API
 const Discord = require("discord.js");
 const client = new Discord.client();
 const bfdapi = require('bfdapi');
-const bfd = new bfdapi(client, 'Your BFD API Token', (Enable AutoPost Stats? true or false), intervalValue(in Seconds & Default to 30 Mins));
+const bfd = new bfdapi(client, 'Your BFD API Token', autopost /*(Enable AutoPost Stats? true or false)*/, intervalValue /*(in Seconds & Default to 30 Mins)/*);
 
 //Events for AutoPost (Optional)
 bfd.on('isPosted', (guildCount) => {
@@ -31,4 +31,5 @@ bfd.on('isError', (error) => {
 
 ## Supported Libraries 
 Discord.js
+<br />
 Eris
