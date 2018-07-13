@@ -8,14 +8,14 @@ Javascript Library made for Bots for Discord API
 ```js
 const Discord = require("discord.js");
 const client = new Discord.client();
-const bfdapi = require('bfdapi');
+const bfdapi = require('bfd-js-api');
 const bfd = new bfdapi(client, 'Your BFD API Token', autopost /*(Enable AutoPost Stats? true or false)*/, intervalValue /*(in Seconds & Default to 30 Mins)*/);
 
 //Events for AutoPost (Optional)
 bfd.on('isPosted', (guildCount) => {
 	console.log(`Successfully Posted ${guildCount} Guilds`);
 });
-bfd.on('isError', (error) => {
+bfd.on('isError', (err) => {
 	console.log(`I have Errored!`);
 });
 ```
@@ -24,7 +24,7 @@ bfd.on('isError', (error) => {
 ```js
 .getBotStats(botID);
 //returns a Promise<Object>
-.getAllBots(isVerified)
+.getAllBots(isVerified /*(Optional)*/)
 //returns a Promise<Object>
 
 .getUserStats(userID);
