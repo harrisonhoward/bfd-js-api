@@ -19,9 +19,9 @@ class bfdAPI extends EventEmitter {
         intervalValue = intervalValue || 1800;
 
         if (client && autopost) {
-            if (this.intervalValue > 86400) {
+            if (intervalValue > 86400) {
                 throw new Error('intervalValue can not exceed 86400 Seconds (24 Hours)');
-            } else if (this.intervalValue < 60) {
+            } else if (intervalValue < 60) {
                 throw new Error('intervalValue can not be smaller than 60 Seconds (1 Minute)');
             }
 
@@ -35,7 +35,7 @@ class bfdAPI extends EventEmitter {
              * @param {error} error The Error
              */
 
-            this.intervalValue * 1000;
+            intervalValue * 1000;
             this.client.on('ready', () => {
                 AutoPost.Post(this.client, APIURL + 'bots/{clientID}', this.token)
                     .then(() => this.emit('isPosted', this.client.guilds.size))
@@ -44,7 +44,7 @@ class bfdAPI extends EventEmitter {
                     AutoPost.Post(this.client, APIURL + 'bots/{clientID}', this.token)
                         .then(() => this.emit('isPosted', this.client.guilds.size))
                         .catch((err) => this.emit('isError', err));
-                }, this.intervalValue);
+                }, intervalValue);
             });
         } else if (!client && autopost) {
             throw new Error('The Client you provided is Invalid. Disable AutoPost to Remove this Error.');
