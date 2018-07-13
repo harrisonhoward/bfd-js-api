@@ -16,8 +16,7 @@ class bfdAPI extends EventEmitter {
         super();
         this.client = client;
         this.token = token;
-        this.autopost = autopost;
-        this.intervalValue = intervalValue || 1800;
+        intervalValue = intervalValue || 1800;
 
         if (client && autopost) {
             if (this.intervalValue > 86400) {
@@ -48,7 +47,7 @@ class bfdAPI extends EventEmitter {
                 }, this.intervalValue);
             });
         } else if (!client && autopost) {
-            throw new Error('The Client your provided is Invalid. Disable AutoPost to Remove this Error.');
+            throw new Error('The Client you provided is Invalid. Disable AutoPost to Remove this Error.');
         }
     }
 
@@ -64,6 +63,25 @@ class bfdAPI extends EventEmitter {
             throw new Error('Invalid ID provided for getBotStats [ .getBotStats(botID) ]');
         }
         return res.body;
+    }
+    /**
+     * @param {Object} [options] The Options Available
+     * @param {boolean} [options.isVerified] Filter by Verified Bots
+     */
+    async getAllBots(options = false) {
+        if (typeof options !== "boolean") {
+            options = false;
+        }
+        const res = await Request.request(`${APIURL}bots`);
+        let botArray = [];
+        for (let bot of res.body) {
+            if (options && bot.verified) {
+                botArray.push(bot);
+            } else if (!options) {
+                botArray.push(bot)
+            }
+        }
+        return botArray;
     }
 
     /**
@@ -84,6 +102,24 @@ class bfdAPI extends EventEmitter {
             throw new Error('The User ID provided has no Bots for getUserStats');
         }
         return botArray;
+    }
+    async getAllUsers() {
+        const res = await Request.request(`${APIURL}bots`);
+        let userArray = [];
+        loop:
+        for (let bot of res.body) {
+            let userJSON = {};
+            userJSON["id"] = bot.owner;
+            userJSON["username"] = bot.ownername;
+            userJSON["tag"] = bot.ownernametwo;
+            for (let user of userArray) {
+                if (user.id === userJSON["id"]) {
+                    continue loop
+                }
+            }
+            userArray.push(userJSON);
+        }
+        return userArray;
     }
 }
 

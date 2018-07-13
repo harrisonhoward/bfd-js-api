@@ -1,4 +1,4 @@
-# bfdapi
+# bfd-js-api
 Javascript Library made for Bots for Discord API
 
 ## How to Install
@@ -24,8 +24,12 @@ bfd.on('isError', (error) => {
 ```js
 .getBotStats(botID);
 //returns a Promise<Object>
+.getAllBots(isVerified)
+//returns a Promise<Object>
 
 .getUserStats(userID);
+//returns a Promise<Object>
+.getAllUsers()
 //returns a Promise<Object>
 ```
 

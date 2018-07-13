@@ -1,6 +1,6 @@
 {
   "name": "bfd-js-api",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "Bots for Discord API VIA JS",
   "main": "index.js",
   "scripts": {
