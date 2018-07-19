@@ -20,39 +20,37 @@ class bfdAPI extends EventEmitter {
 
         if (client && autopost) {
             if (intervalValue > 86400) {
-                throw new Error('intervalValue can not exceed 86400 Seconds (24 Hours)');
+                throw new Error("'intervalValue' cannot exceed 86400 seconds. (24 hours)");
             } else if (intervalValue < 60) {
-                throw new Error('intervalValue can not be smaller than 60 Seconds (1 Minute)');
+                throw new Error("'intervalValue' cannot be smaller then 60 seconds. (1 minute)");
             }
 
             /**
-             * @event isPosted Event Posted
-             * @param {number} guildCount Guild Count Posted
+             * @event bdfAPI#posted
+             * @param {number} guildCount The guild count that was posted.
              */
-
             /**
-             * @event isError Event Error
-             * @param {error} error The Error
+             * @event bfdAPI#error
+             * @param {Error} error The error that occured.
              */
-
             intervalValue * 1000;
             this.client.on('ready', () => {
-                AutoPost.Post(this.client, APIURL + 'bots/{clientID}', this.token)
-                    .then(() => this.emit('isPosted', this.client.guilds.size))
-                    .catch((err) => this.emit('isError', err));
+                AutoPost.Post(this.client, `${APIURL}/bots/{clientID}`, this.token)
+                    .then(() => this.emit('posted', this.client.guilds.size))
+                    .catch((err) => this.emit('error', err));
                 setInterval(() => {
-                    AutoPost.Post(this.client, APIURL + 'bots/{clientID}', this.token)
-                        .then(() => this.emit('isPosted', this.client.guilds.size))
-                        .catch((err) => this.emit('isError', err));
+                    AutoPost.Post(this.client, `${APIURL}/bots/{clientID}`, this.token)
+                        .then(() => this.emit('posted', this.client.guilds.size))
+                        .catch((err) => this.emit('error', err));
                 }, intervalValue);
             });
         } else if (!client && autopost) {
-            throw new Error('The Client you provided is Invalid. Disable AutoPost to Remove this Error.');
+            throw new Error("The 'client' is invalid. Disable 'autopose' to remove this error!");
         }
     }
 
     /**
-     * @param {string} botID Bot's ID
+     * @param {string} botID The bot id.
      */
     async getBotStats(botID) {
         if (!botID) {
@@ -65,8 +63,8 @@ class bfdAPI extends EventEmitter {
         return res.body;
     }
     /**
-     * @param {Object} [options] The Options Available
-     * @param {boolean} [options.isVerified] Filter by Verified Bots
+     * @param {Object} [options] The options object.
+     * @param {boolean} [options.isVerified] The filter.
      */
     async getAllBots(options = false) {
         if (typeof options !== "boolean") {
@@ -85,11 +83,11 @@ class bfdAPI extends EventEmitter {
     }
 
     /**
-     * @param {string} userID User's ID
+     * @param {string} userID The userID.
      */
     async getUserStats(userID) {
         if (!userID) {
-            throw new Error('You need to provide an ID for getUserStats [ .getUserStats(userID) ]');
+            throw new Error('You need to provide an ID for getUserStats');
         }
         const res = await Request.request(`${APIURL}bots`);
         let botArray = [];
@@ -99,10 +97,11 @@ class bfdAPI extends EventEmitter {
             }
         }
         if (botArray.length < 1) {
-            throw new Error('The User ID provided has no Bots for getUserStats');
+            throw new Error('The user ID provided has no Bots for getUserStats');
         }
         return botArray;
     }
+    
     async getAllUsers() {
         const res = await Request.request(`${APIURL}bots`);
         let userArray = [];
@@ -114,7 +113,7 @@ class bfdAPI extends EventEmitter {
             userJSON["tag"] = bot.ownernametwo;
             for (let user of userArray) {
                 if (user.id === userJSON["id"]) {
-                    continue loop
+                    continue;
                 }
             }
             userArray.push(userJSON);
