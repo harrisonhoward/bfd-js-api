@@ -20,9 +20,9 @@ class bfdAPI extends EventEmitter {
 
         if (client && autopost) {
             if (intervalValue > 86400) {
-                throw new Error('intervalValue can not exceed 86400 Seconds (24 Hours)');
+                throw new Error('intervalValue cannot exceed 86400 Seconds (24 Hours)');
             } else if (intervalValue < 60) {
-                throw new Error('intervalValue can not be smaller than 60 Seconds (1 Minute)');
+                throw new Error('intervalValue cannot be smaller than 60 Seconds (1 Minute)');
             }
 
             /**
@@ -47,7 +47,7 @@ class bfdAPI extends EventEmitter {
                 }, intervalValue);
             });
         } else if (!client && autopost) {
-            throw new Error('The Client you provided is Invalid. Disable AutoPost to Remove this Error.');
+            throw new Error('The \'client\' you provided is invalid. Disable \'autopost\' to remove this error.');
         }
     }
 
@@ -114,7 +114,7 @@ class bfdAPI extends EventEmitter {
             userJSON["tag"] = bot.ownernametwo;
             for (let user of userArray) {
                 if (user.id === userJSON["id"]) {
-                    continue loop
+                    continue loop;
                 }
             }
             userArray.push(userJSON);
