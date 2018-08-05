@@ -97,7 +97,7 @@ class bfdAPI extends EventEmitter {
         if (res.text === '{}') {
             throw new Error('Invalid ID provided for getBotEmbed [ .getBotEmbed(botID, isDark) ]');
         }
-        return `${APIURL}bots/${botID}/embed${isDark ? "?theme=dark" : ""}&type=png`;
+        return `${APIURL}bots/${botID}/embed?type=png${isDark ? "&theme=dark" : ""}`;
     }
 
     /**
