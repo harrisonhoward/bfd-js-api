@@ -17,6 +17,7 @@
   "homepage": "https://github.com/Forbidden-Duck/bfdapi.js",
   "license": "Apache-2.0",
   "dependencies": {
+    "canvas": "^1.6.11",
     "superagent": "^3.8.3"
   }
 }
