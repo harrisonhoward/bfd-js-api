@@ -38,7 +38,7 @@ class AutoPost {
                 .addText(ownerName, 442, 113)
                 .addText(botName, 442, 163)
                 .addText(botCount, 442, 213)
-                .addText(message.author.id, 442, 259)
+                .addText(bot.owner, 442, 259)
                 .restore()
                 .addRoundImage(avatar, 40, 96, 128, 128, 64)
                 .toBuffer();
