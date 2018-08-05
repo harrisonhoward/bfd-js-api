@@ -83,6 +83,22 @@ class bfdAPI extends EventEmitter {
         }
         return botArray;
     }
+    /**
+     * @param {string} botID Bot's ID
+     * @param {boolean} isDark Embed is Dark?
+     */
+    async getBotEmbed(botID, isDark = false) {
+        if (!botID) {
+            throw new Error('You need to provide an ID for getBotEmbed [ .getBotEmbed(botID, isDark) ]');
+        } else if (typeof isDark !== "boolean") {
+            isDark = false;
+        }
+        const res = await Request.request(`${APIURL}bots/${botID}/`);
+        if (res.text === '{}') {
+            throw new Error('Invalid ID provided for getBotEmbed [ .getBotEmbed(botID, isDark) ]');
+        }
+        return `${APIURL}bots/${botID}/embed${isDark ? "?theme=dark" : ""}&type=png`;
+    }
 
     /**
      * @param {string} userID User's ID

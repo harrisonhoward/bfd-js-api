@@ -24,12 +24,14 @@ bfd.on('isError', (err) => {
 ```js
 .getBotStats(botID);
 //returns a Promise<Object>
-.getAllBots(isVerified /*(Optional)*/)
+.getBotEmbed(botID, isDark /*(Optional)*/);
+//returns a URL
+.getAllBots(isVerified /*(Optional)*/);
 //returns a Promise<Object>
 
 .getUserStats(userID);
 //returns a Promise<Object>
-.getAllUsers()
+.getAllUsers();
 //returns a Promise<Object>
 ```
 
