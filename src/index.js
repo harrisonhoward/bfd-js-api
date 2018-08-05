@@ -1,6 +1,7 @@
 const EventEmitter = require('events');
 const AutoPost = require("./AutoPost.js");
 const Request = require("./Request.js");
+const EmbedMaker = require("./EmbedMaker.js");
 const APIURL = 'https://botsfordiscord.com/api/v1/';
 
 class bfdAPI extends EventEmitter {
@@ -85,19 +86,16 @@ class bfdAPI extends EventEmitter {
     }
     /**
      * @param {string} botID Bot's ID
-     * @param {boolean} isDark Embed is Dark?
      */
-    async getBotEmbed(botID, isDark = false) {
+    async getBotEmbed(botID) {
         if (!botID) {
             throw new Error('You need to provide an ID for getBotEmbed [ .getBotEmbed(botID, isDark) ]');
-        } else if (typeof isDark !== "boolean") {
-            isDark = false;
         }
         const res = await Request.request(`${APIURL}bots/${botID}/`);
         if (res.text === '{}') {
             throw new Error('Invalid ID provided for getBotEmbed [ .getBotEmbed(botID, isDark) ]');
         }
-        return `${APIURL}bots/${botID}/embed?type=png${isDark ? "&theme=dark" : ""}`;
+        return EmbedMaker.Embed(res.body);
     }
 
     /**

@@ -24,7 +24,7 @@ bfd.on('isError', (err) => {
 ```js
 .getBotStats(botID);
 //returns a Promise<Object>
-.getBotEmbed(botID, isDark /*(Optional)*/);
+.getBotEmbed(botID);
 //returns a URL
 .getAllBots(isVerified /*(Optional)*/);
 //returns a Promise<Object>
