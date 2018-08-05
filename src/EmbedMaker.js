@@ -1,6 +1,5 @@
 const { get } = require('superagent');
 const { Canvas } = require('canvas-constructor');
-const format = require("format-number");
 
 class AutoPost {
     static async Embed(bot) {
