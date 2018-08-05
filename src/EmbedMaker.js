@@ -8,7 +8,7 @@ class AutoPost {
             const { body: avatar } = await get(bot.avatar + "?size=128");
             const ownerName = bot.ownernametwo ? bot.ownernametwo : bot.ownername ? bot.ownername : "Invalid";
             const botName = bot.name;
-            const botCount = format()(bot.count, { noSeperator: false });
+            const botCount = bot.count.toLocaleString('us-en', { useGrouping: true });
             return new Canvas(500, 280)
                 .setColor('#1E2020')
                 .addRect(0, 0, 500, 280)
@@ -40,7 +40,7 @@ class AutoPost {
                 .addRoundImage(avatar, 40, 91, 128, 128, 64)
                 .toBuffer();
         } catch (err) {
-            throw new Error(err);
+            console.error(err);
         }
     }
 }

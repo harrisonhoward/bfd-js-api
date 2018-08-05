@@ -48,7 +48,7 @@ class bfdAPI extends EventEmitter {
                 }, intervalValue);
             });
         } else if (!client && autopost) {
-            throw new Error('The \'client\' you provided is invalid. Disable \'autopost\' to remove this error.');
+            throw new Error("The 'client' you provided is invalid. Disable 'autopost' to remove this error.");
         }
     }
 
@@ -75,7 +75,7 @@ class bfdAPI extends EventEmitter {
         }
         const res = await Request.request(`${APIURL}bots`);
         let botArray = [];
-        for (let bot of res.body) {
+        for (const bot of res.body) {
             if (options && bot.verified) {
                 botArray.push(bot);
             } else if (!options) {
@@ -107,7 +107,7 @@ class bfdAPI extends EventEmitter {
         }
         const res = await Request.request(`${APIURL}bots`);
         let botArray = [];
-        for (let bot of res.body) {
+        for (const bot of res.body) {
             if (bot.owner === userID) {
                 botArray.push(bot);
             }
@@ -121,7 +121,7 @@ class bfdAPI extends EventEmitter {
         const res = await Request.request(`${APIURL}bots`);
         let userArray = [];
         loop:
-        for (let bot of res.body) {
+        for (const bot of res.body) {
             let userJSON = {};
             userJSON["id"] = bot.owner;
             userJSON["username"] = bot.ownername;
