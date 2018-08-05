@@ -19,7 +19,6 @@
   "dependencies": {
     "canvas": "^1.6.11",
     "canvas-constructor": "^1.0.1",
-    "format-number": "^3.0.0",
     "superagent": "^3.8.3"
   }
 }
