@@ -12,11 +12,11 @@ const bfdapi = require('bfd-js-api');
 const bfd = new bfdapi(client, 'Your BFD API Token', autopost /*(Enable AutoPost Stats? true or false)*/, intervalValue /*(in Seconds & Default to 30 Mins)*/);
 
 //Events for AutoPost (Optional)
-bfd.on('isPosted', (guildCount) => {
+bfd.on('posted', (guildCount) => {
 	console.log(`Successfully Posted ${guildCount} Guilds`);
 });
-bfd.on('isError', (err) => {
-	console.log(`I have Errored!`);
+bfd.on('error', (err) => {
+	console.log(`I have Errored!\n${err}`);
 });
 ```
 

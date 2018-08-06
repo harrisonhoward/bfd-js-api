@@ -27,24 +27,24 @@ class bfdAPI extends EventEmitter {
             }
 
             /**
-             * @event isPosted Event Posted
+             * @event posted Event Posted
              * @param {number} guildCount Guild Count Posted
              */
 
             /**
-             * @event isError Event Error
+             * @event error Event Error
              * @param {error} error The Error
              */
 
             intervalValue * 1000;
             this.client.on('ready', () => {
                 AutoPost.Post(this.client, APIURL + 'bots/{clientID}', this.token)
-                    .then(() => this.emit('isPosted', this.client.guilds.size))
-                    .catch((err) => this.emit('isError', err));
+                    .then(() => this.emit('posted', this.client.guilds.size))
+                    .catch((err) => this.emit('error', err));
                 setInterval(() => {
                     AutoPost.Post(this.client, APIURL + 'bots/{clientID}', this.token)
-                        .then(() => this.emit('isPosted', this.client.guilds.size))
-                        .catch((err) => this.emit('isError', err));
+                        .then(() => this.emit('posted', this.client.guilds.size))
+                        .catch((err) => this.emit('error', err));
                 }, intervalValue);
             });
         } else if (!client && autopost) {
@@ -89,11 +89,11 @@ class bfdAPI extends EventEmitter {
      */
     async getBotEmbed(botID) {
         if (!botID) {
-            throw new Error('You need to provide an ID for getBotEmbed [ .getBotEmbed(botID, isDark) ]');
+            throw new Error('You need to provide an ID for getBotEmbed [ .getBotEmbed(botID) ]');
         }
         const res = await Request.request(`${APIURL}bots/${botID}/`);
         if (res.text === '{}') {
-            throw new Error('Invalid ID provided for getBotEmbed [ .getBotEmbed(botID, isDark) ]');
+            throw new Error('Invalid ID provided for getBotEmbed [ .getBotEmbed(botID) ]');
         }
         return EmbedMaker.Embed(res.body);
     }
