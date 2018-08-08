@@ -60,7 +60,7 @@ class bfdAPI extends EventEmitter {
             throw new Error('You need to provide an ID for getBotStats [ .getBotStats(botID) ]');
         }
         try {
-            const res = await Request.request(`${APIURL}bots/${botID}`);
+            var res = await Request.request(`${APIURL}bots/${botID}`);
         } catch (err) {
             if (err.toString() === "Error: Not Found") {
                 throw new Error('Invalid ID provided for getBotStats [ .getBotStats(botID) ]');
@@ -115,7 +115,7 @@ class bfdAPI extends EventEmitter {
         if (!userID) {
             throw new Error('You need to provide an ID for getUserStats [ .getUserStats(userID) ]');
         }
-        const res = await Request.request(`${APIURL}bots`);
+        var res = await Request.request(`${APIURL}bots`);
         let botArray = [];
         for (const bot of res.body) {
             if (bot.owner === userID) {
