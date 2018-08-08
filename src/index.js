@@ -59,9 +59,14 @@ class bfdAPI extends EventEmitter {
         if (!botID) {
             throw new Error('You need to provide an ID for getBotStats [ .getBotStats(botID) ]');
         }
-        const res = await Request.request(`${APIURL}bots/${botID}`);
-        if (res.text === '{}') {
-            throw new Error('Invalid ID provided for getBotStats [ .getBotStats(botID) ]');
+        try {
+            const res = await Request.request(`${APIURL}bots/${botID}`);
+        } catch (err) {
+            if (err.toString() === "Error: Not Found") {
+                throw new Error('Invalid ID provided for getBotStats [ .getBotStats(botID) ]');
+            } else {
+                throw err;
+            }
         }
         return res.body;
     }
@@ -91,9 +96,14 @@ class bfdAPI extends EventEmitter {
         if (!botID) {
             throw new Error('You need to provide an ID for getBotEmbed [ .getBotEmbed(botID) ]');
         }
-        const res = await Request.request(`${APIURL}bots/${botID}/`);
-        if (res.text === '{}') {
-            throw new Error('Invalid ID provided for getBotEmbed [ .getBotEmbed(botID) ]');
+        try {
+            var res = await Request.request(`${APIURL}bots/${botID}`);
+        } catch (err) {
+            if (err.toString() === "Error: Not Found") {
+                throw new Error('Invalid ID provided for getBotEmbed [ .getBotEmbed(botID) ]');
+            } else {
+                throw err;
+            }
         }
         return EmbedMaker.Embed(res.body);
     }
@@ -113,7 +123,7 @@ class bfdAPI extends EventEmitter {
             }
         }
         if (botArray.length < 1) {
-            throw new Error('The User ID provided has no Bots for getUserStats');
+            throw new Error('The User ID provided has no Bots for [ getUserStats(userID) ]');
         }
         return botArray;
     }

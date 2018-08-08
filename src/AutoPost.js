@@ -11,7 +11,7 @@ class AutoPost {
                     server_count: Number(guildCount)
                 });
         } catch (err) {
-            console.error(err);
+            throw err;
         }
     }
 }

@@ -43,7 +43,7 @@ class AutoPost {
                 .addRoundImage(avatar, 40, 91, 128, 128, 64)
                 .toBuffer();
         } catch (err) {
-            console.error(err);
+            throw err;
         }
     }
 }
