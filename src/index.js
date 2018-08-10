@@ -36,7 +36,7 @@ class bfdAPI extends EventEmitter {
              * @param {error} error The Error
              */
 
-            intervalValue * 1000;
+            intervalValue = intervalValue * 1000;
             this.client.on('ready', () => {
                 AutoPost.Post(this.client, APIURL + 'bots/{clientID}', this.token)
                     .then(() => this.emit('posted', this.client.guilds.size))
