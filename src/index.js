@@ -1,8 +1,7 @@
 const EventEmitter = require('events');
 const AutoPost = require("./AutoPost.js");
 const Request = require("./Request.js");
-const EmbedMaker = require("./EmbedMaker.js");
-const APIURL = 'https://botsfordiscord.com/api/v1/';
+const APIURL = 'https://botsfordiscord.com/api/';
 
 class bfdAPI extends EventEmitter {
     /**
@@ -38,11 +37,11 @@ class bfdAPI extends EventEmitter {
 
             intervalValue = intervalValue * 1000;
             this.client.on('ready', () => {
-                AutoPost.Post(this.client, APIURL + 'bots/{clientID}', this.token)
+                AutoPost.Post(this.client, APIURL + 'bot/{clientID}', this.token)
                     .then(() => this.emit('posted', this.client.guilds.size))
                     .catch((err) => this.emit('error', err));
                 setInterval(() => {
-                    AutoPost.Post(this.client, APIURL + 'bots/{clientID}', this.token)
+                    AutoPost.Post(this.client, APIURL + 'bot/{clientID}', this.token)
                         .then(() => this.emit('posted', this.client.guilds.size))
                         .catch((err) => this.emit('error', err));
                 }, intervalValue);
@@ -60,7 +59,7 @@ class bfdAPI extends EventEmitter {
             throw new Error('You need to provide an ID for getBotStats [ .getBotStats(botID) ]');
         }
         try {
-            var res = await Request.request(`${APIURL}bots/${botID}`);
+            var res = await Request.request(`${APIURL}bot/${botID}`);
         } catch (err) {
             if (err.toString() === "Error: Not Found") {
                 throw new Error('Invalid ID provided for getBotStats [ .getBotStats(botID) ]');
@@ -70,10 +69,9 @@ class bfdAPI extends EventEmitter {
         }
         return res.body;
     }
-    /**
+    /* CURRENTLY UNAVAILABLE
      * @param {Object} [options] The Options Available
      * @param {boolean} [options.isVerified] Filter by Verified Bots
-     */
     async getAllBots(options = false) {
         if (typeof options !== "boolean") {
             options = false;
@@ -89,9 +87,10 @@ class bfdAPI extends EventEmitter {
         }
         return botArray;
     }
-    /**
+    */
+
+    /* CURRENTLY UNAVAILABLE
      * @param {string} botID Bot's ID
-     */
     async getBotEmbed(botID) {
         if (!botID) {
             throw new Error('You need to provide an ID for getBotEmbed [ .getBotEmbed(botID) ]');
@@ -107,6 +106,21 @@ class bfdAPI extends EventEmitter {
         }
         return EmbedMaker.Embed(res.body);
     }
+    */
+
+    /**
+     * @param {string} userID User's ID
+     */
+    async getUserBots(userID) {
+        if (!userID) {
+            throw new Error('You need to provide an ID for getUserBots [ .getUserBots(userID) ]');
+        }
+        var res = await Request.request(`${APIURL}bots/${userID}`);
+        if (res.body.bots && res.body.bots.length < 1) {
+            throw new Error('The User ID provided has no Bots for getUserBots [ .getUserBots(userID) ]');
+        }
+        return res.body.bots;
+    }
 
     /**
      * @param {string} userID User's ID
@@ -115,35 +129,14 @@ class bfdAPI extends EventEmitter {
         if (!userID) {
             throw new Error('You need to provide an ID for getUserStats [ .getUserStats(userID) ]');
         }
-        var res = await Request.request(`${APIURL}bots`);
-        let botArray = [];
-        for (const bot of res.body) {
-            if (bot.owner === userID) {
-                botArray.push(bot);
+        try {
+            var res = await Request.request(`${APIURL}user/${userID}`);
+        } catch (err) {
+            if (err.toString() === "Error: 404 Not Fond") {
+                throw new Error('Invalid ID provided for getUserStats [ .getUserStats(userID) ]');
             }
         }
-        if (botArray.length < 1) {
-            throw new Error('The User ID provided has no Bots for [ getUserStats(userID) ]');
-        }
-        return botArray;
-    }
-    async getAllUsers() {
-        const res = await Request.request(`${APIURL}bots`);
-        let userArray = [];
-        loop:
-        for (const bot of res.body) {
-            let userJSON = {};
-            userJSON["id"] = bot.owner;
-            userJSON["username"] = bot.ownername;
-            userJSON["tag"] = bot.ownernametwo;
-            for (let user of userArray) {
-                if (user.id === userJSON["id"]) {
-                    continue loop;
-                }
-            }
-            userArray.push(userJSON);
-        }
-        return userArray;
+        return res.body;
     }
 }
 
