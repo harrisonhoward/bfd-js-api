@@ -61,7 +61,7 @@ class bfdAPI extends EventEmitter {
         try {
             var res = await Request.request(`${APIURL}bot/${botID}`);
         } catch (err) {
-            if (err.toString() === "Error: Not Found") {
+            if (err.toString() === "Error: Bot not found") {
                 throw new Error('Invalid ID provided for getBotStats [ .getBotStats(botID) ]');
             } else {
                 throw err;
@@ -89,24 +89,24 @@ class bfdAPI extends EventEmitter {
     }
     */
 
-    /* CURRENTLY UNAVAILABLE
+    /**
      * @param {string} botID Bot's ID
+     */
     async getBotEmbed(botID) {
         if (!botID) {
             throw new Error('You need to provide an ID for getBotEmbed [ .getBotEmbed(botID) ]');
         }
         try {
-            var res = await Request.request(`${APIURL}bots/${botID}`);
+            var res = await Request.request(`${APIURL}bot/${botID}/widget`);
         } catch (err) {
-            if (err.toString() === "Error: Not Found") {
+            if (err.toString() === "Error: Bot not found") {
                 throw new Error('Invalid ID provided for getBotEmbed [ .getBotEmbed(botID) ]');
             } else {
                 throw err;
             }
         }
-        return EmbedMaker.Embed(res.body);
+        return res.body;
     }
-    */
 
     /**
      * @param {string} userID User's ID
