@@ -58,37 +58,9 @@ class bfdAPI extends EventEmitter {
         if (!botID) {
             throw new Error('You need to provide an ID for getBotStats [ .getBotStats(botID) ]');
         }
-        try {
-            var res = await Request.request(`${APIURL}bot/${botID}`);
-        } catch (err) {
-            if (err.toString() === "Error: Bot not found") {
-                throw new Error('Invalid ID provided for getBotStats [ .getBotStats(botID) ]');
-            } else {
-                throw err;
-            }
-        }
+        var res = await Request.request(`${APIURL}bot/${botID}`);
         return res.body;
     }
-    /* CURRENTLY UNAVAILABLE
-     * @param {Object} [options] The Options Available
-     * @param {boolean} [options.isVerified] Filter by Verified Bots
-    async getAllBots(options = false) {
-        if (typeof options !== "boolean") {
-            options = false;
-        }
-        const res = await Request.request(`${APIURL}bots`);
-        let botArray = [];
-        for (const bot of res.body) {
-            if (options && bot.verified) {
-                botArray.push(bot);
-            } else if (!options) {
-                botArray.push(bot)
-            }
-        }
-        return botArray;
-    }
-    */
-
     /**
      * @param {string} botID Bot's ID
      */
@@ -96,15 +68,7 @@ class bfdAPI extends EventEmitter {
         if (!botID) {
             throw new Error('You need to provide an ID for getBotEmbed [ .getBotEmbed(botID) ]');
         }
-        try {
-            var res = await Request.request(`${APIURL}bot/${botID}/widget`);
-        } catch (err) {
-            if (err.toString() === "Error: Bot not found") {
-                throw new Error('Invalid ID provided for getBotEmbed [ .getBotEmbed(botID) ]');
-            } else {
-                throw err;
-            }
-        }
+        var res = await Request.request(`${APIURL}bot/${botID}/widget`);
         return res.body;
     }
 
@@ -115,11 +79,8 @@ class bfdAPI extends EventEmitter {
         if (!userID) {
             throw new Error('You need to provide an ID for getUserBots [ .getUserBots(userID) ]');
         }
-        var res = await Request.request(`${APIURL}bots/${userID}`);
-        if (res.body.bots && res.body.bots.length < 1) {
-            throw new Error('The User ID provided has no Bots for getUserBots [ .getUserBots(userID) ]');
-        }
-        return res.body.bots;
+        var res = await Request.request(`${APIURL}user/${userID}/bots`);
+        return res.body;
     }
 
     /**
@@ -129,13 +90,7 @@ class bfdAPI extends EventEmitter {
         if (!userID) {
             throw new Error('You need to provide an ID for getUserStats [ .getUserStats(userID) ]');
         }
-        try {
-            var res = await Request.request(`${APIURL}user/${userID}`);
-        } catch (err) {
-            if (err.toString() === "Error: 404 Not Fond") {
-                throw new Error('Invalid ID provided for getUserStats [ .getUserStats(userID) ]');
-            }
-        }
+        var res = await Request.request(`${APIURL}user/${userID}`);
         return res.body;
     }
 }
