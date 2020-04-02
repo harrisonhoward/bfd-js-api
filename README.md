@@ -1,3 +1,6 @@
+## WARNING
+OUT OF DATE. DO NOT USE
+
 # bfd-js-api
 Javascript Library made for Bots for Discord API
 
